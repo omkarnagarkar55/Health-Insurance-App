@@ -1,0 +1,16 @@
+[
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "username": "johndoe",
+    "password": "password123",
+    "email": "johndoe@example.com",
+    "age": 25,
+    "gender": "Male",
+    "DOB": "1998-05-15",
+    "phonenumber": "+1234567890",
+    "address": "123 Main Street, Springfield, USA",
+    "role": "admin",
+    "active": true
+  }
+]
