@@ -7,6 +7,7 @@ const planRoutes = require("./routes/planRoutes");
 const planDataRoutes = require("./routes/plandataRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
+const Admin = require("./models/adminModel"); // Import the Admin model
 require("dotenv").config(); // Load environment variables from .env
 
 const app = express();
@@ -21,8 +22,32 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => {
+  .then(async () => {
     console.log("Database connected Successfully");
+    // Check if any admin exists
+    const adminExists = await Admin.findOne({ role: "admin" });
+    if (!adminExists) {
+      // Create a default admin
+      const defaultAdmin = new Admin({
+      firstname: process.env.DEFAULT_ADMIN_FIRSTNAME,
+      lastname: process.env.DEFAULT_ADMIN_LASTNAME,
+      username: process.env.DEFAULT_ADMIN_USERNAME,
+      password: process.env.DEFAULT_ADMIN_PASSWORD, // Use a secure password in production
+      email: process.env.DEFAULT_ADMIN_EMAIL,
+      age: parseInt(process.env.DEFAULT_ADMIN_AGE, 10),
+      gender: process.env.DEFAULT_ADMIN_GENDER,
+      DOB: process.env.DEFAULT_ADMIN_DOB,
+      phonenumber: process.env.DEFAULT_ADMIN_PHONENUMBER,
+      address: process.env.DEFAULT_ADMIN_ADDRESS,
+      role: process.env.DEFAULT_ADMIN_ROLE,
+      active: process.env.DEFAULT_ADMIN_ACTIVE === "true",
+      
+      });
+
+      // Save the default admin to the database
+      await defaultAdmin.save();
+      console.log("Default admin created with username: admin and password: admin123");
+    }
   })
   .catch((error) => {
     console.error("Error connecting to the database : ", error);
