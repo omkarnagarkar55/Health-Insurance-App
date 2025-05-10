@@ -16,12 +16,6 @@ const UserTableRow = ({ user, onDeleteClick, onUpdateClick }) => {
       <td className="border px-4 py-2">{user.country}</td>
       <td className="border px-4 py-2">
         <button
-          onClick={() => onUpdateClick(user)}
-          className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded mr-2"
-        >
-          Edit
-        </button>
-        <button
           onClick={() => onDeleteClick(user._id)}
           className="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded"
         >

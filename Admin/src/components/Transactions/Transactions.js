@@ -85,7 +85,7 @@ const Transactions = () => {
             <tr>
               <th className="py-2">ID</th>
               <th className="py-2">User</th>
-              <th className="py-2">Amount (₹)</th>
+              <th className="py-2">Amount ($)</th>
               <th className="py-2">Status</th>
             </tr>
           </thead>
@@ -94,7 +94,7 @@ const Transactions = () => {
               <tr key={transaction.id}>
                 <td className="py-2">{transaction.id}</td>
                 <td className="py-2">{transaction.user}</td>
-                <td className="py-2">₹{transaction.amount}</td>
+                <td className="py-2">${transaction.amount}</td>
                 <td className="py-2">
                   <span
                     className={`px-2 py-1 rounded ${

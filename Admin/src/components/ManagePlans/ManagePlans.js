@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
 import PlanForm from "./PlanForm";
 
 const ManagePlans = () => {
@@ -13,7 +12,6 @@ const ManagePlans = () => {
     const filtered = plans.filter((plan) => {
       const title = plan.title || "";
       const description = plan.description || "";
-
       return (
         title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,18 +21,7 @@ const ManagePlans = () => {
   }, [searchTerm, plans]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/plans/getAll")
-      .then((response) => {
-        setPlans(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching plans:", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    filterPlans(); // Call it immediately to filter plans on component mount
+    filterPlans();
   }, [searchTerm, plans, filterPlans]);
 
   const handleAddClick = () => {
@@ -52,23 +39,14 @@ const ManagePlans = () => {
     setSelectedPlan(null);
   };
 
+  const handleDummyAdd = (newPlan) => {
+    const dummyId = Math.random().toString(36).substring(2, 9);
+    setPlans((prev) => [...prev, { ...newPlan, id: dummyId }]);
+  };
+
   const handleDelete = (planId) => {
-    axios
-      .delete(`http://localhost:5000/plans/${planId}`)
-      .then(() => {
-        // Refresh the plan data after deleting the plan
-        axios
-          .get("http://localhost:5000/plans/getAll")
-          .then((response) => {
-            setPlans(response.data);
-          })
-          .catch((error) => {
-            console.error("Error fetching plans:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("Error deleting plan:", error);
-      });
+    const updated = plans.filter((p) => p.id !== planId);
+    setPlans(updated);
   };
 
   return (
@@ -126,12 +104,6 @@ const ManagePlans = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-md text-gray-900">
                     <button
-                      className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded-full mr-2"
-                      onClick={() => handleEditClick(plan)}
-                    >
-                      Edit
-                    </button>
-                    <button
                       className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded-full"
                       onClick={() => handleDelete(plan.id)}
                     >
@@ -144,13 +116,14 @@ const ManagePlans = () => {
           </table>
         </div>
       </div>
-      {isAddMode || selectedPlan ? (
+      {(isAddMode || selectedPlan) && (
         <PlanForm
           plan={selectedPlan}
           onClose={handleFormClose}
           isEditMode={!isAddMode}
+          onSuccess={handleDummyAdd}
         />
-      ) : null}
+      )}
     </div>
   );
 };
