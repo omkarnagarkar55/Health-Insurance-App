@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div >
       <Header /> 
-      <Stat /> 
+      {/* <Stat />  */}
       <Bcard /> 
       <Banner /> 
       <Claimp /> 

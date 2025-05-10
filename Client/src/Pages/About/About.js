@@ -1,5 +1,4 @@
 import React from 'react'
-import Map from './Map'
 import Steps from './Steps'
 import CaresuranceHero from './CaresuranceHero'
 const About = () => {
@@ -7,7 +6,7 @@ const About = () => {
     <div>
       <Steps />
       <CaresuranceHero />
-      <Map />
+      {/* <Map /> */}
     </div>
   )
 }

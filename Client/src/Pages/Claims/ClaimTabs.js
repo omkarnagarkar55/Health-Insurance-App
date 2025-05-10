@@ -7,7 +7,6 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import ClaimImitation from "./ClaimImitation";
-import ClaimHelpdesk from "./ClaimHelpdesk";
 import ClaimUpload from "./ClaimUpload";
 import ClaimProcess from "./ClaimProcess";
 import ClaimStatus from "./ClaimStatus";
@@ -31,19 +30,9 @@ const ClaimTabs = () => {
           onClick={() => handleTabClick("Claim Imitation")}
         >
           <FaRegCopy className="mr-2 inline-block" />
-          Claim Imitation
+          Claim Intimation
         </button>
-        <button
-          className={`${
-            activeTab === "Claim Helpdesk"
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-800"
-          } px-4 py-2 rounded-lg mr-4`}
-          onClick={() => handleTabClick("Claim Helpdesk")}
-        >
-          <FaHeadset className="mr-2 inline-block" />
-          Claim Helpdesk
-        </button>
+
         <button
           className={`${
             activeTab === "Claim Upload"
@@ -81,7 +70,7 @@ const ClaimTabs = () => {
       </div>
       <div className="container mx-auto mt-8">
         {activeTab === "Claim Imitation" && <ClaimImitation />}
-        {activeTab === "Claim Helpdesk" && <ClaimHelpdesk />}
+
         {activeTab === "Claim Upload" && <ClaimUpload />}
         {activeTab === "Claim Process" && <ClaimProcess />}
         {activeTab === "Claim Status" && <ClaimStatus />}{" "}

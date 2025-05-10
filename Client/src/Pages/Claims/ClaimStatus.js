@@ -6,22 +6,23 @@ const ClaimStatus = () => {
     {
       claimNumber: "CLM123456",
       status: "Pending",
-      amount: "₹25,000",
-      date: "2023-07-29",
+      amount: "$300.00",
+      date: "07/29/2023",
       policyHolder: "Pavan Korat",
-      phoneNumber: "+91 8511411930",
+      phoneNumber: "(851) 141-1930",
       email: "pavankorat@example.com",
+      chances: "Low",
     },
     {
       claimNumber: "CLM789012",
       status: "Approved",
-      amount: "₹15,000",
-      date: "2023-07-20",
+      amount: "$180.00",
+      date: "07/20/2023",
       policyHolder: "Aayush Patel",
-      phoneNumber: "+91 9328373131",
+      phoneNumber: "(932) 837-3131",
       email: "aayushpatel@example.com",
+      chances: "High",
     },
-    // Add more claim status data as needed
   ];
 
   return (
@@ -39,8 +40,7 @@ const ClaimStatus = () => {
                 <th className="p-2 border">Amount</th>
                 <th className="p-2 border">Date</th>
                 <th className="p-2 border">Policy Holder</th>
-                <th className="p-2 border">Phone Number</th>
-                <th className="p-2 border">Email</th>
+                <th className="p-2 border">Chances of Approval</th>
               </tr>
             </thead>
             <tbody>
@@ -51,8 +51,7 @@ const ClaimStatus = () => {
                   <td className="p-2 border">{claim.amount}</td>
                   <td className="p-2 border">{claim.date}</td>
                   <td className="p-2 border">{claim.policyHolder}</td>
-                  <td className="p-2 border">{claim.phoneNumber}</td>
-                  <td className="p-2 border">{claim.email}</td>
+                  <td className="p-2 border">{claim.chances}</td>
                 </tr>
               ))}
             </tbody>

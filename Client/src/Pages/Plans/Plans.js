@@ -39,9 +39,9 @@ const Plans = () => {
 
   return (
     <div>
-      <Header />
-      <Stat />
-      <Infocard />
+      {/* <Header /> */}
+      {/* <Stat /> */}
+      {/* <Infocard /> */}
       <Hplan />
       <OnlineBenefit />
       <Info1 />

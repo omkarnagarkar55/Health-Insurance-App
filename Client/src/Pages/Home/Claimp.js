@@ -68,7 +68,7 @@ const Claimp = () => {
                   24X7 Support
                 </h2>
                 <p className="leading-relaxed text-base">
-                  Call us at +91 93283-73131 / +91 85114-411930 to clear your
+                  Call us at +1(999)999-9999 to clear your
                   queries.
                 </p>
               </div>

@@ -40,7 +40,7 @@ const ClaimImitation = () => {
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4 text-center">
-        Health Insurance Claim Imitation
+        Health Insurance Claim Intimation
       </h2>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
@@ -119,19 +119,22 @@ const ClaimImitation = () => {
           ></textarea>
         </div>
         <div>
-          <label className="block font-medium" htmlFor="totalAmount">
-            Total Amount
-          </label>
-          <input
-            type="number"
-            id="totalAmount"
-            name="totalAmount"
-            className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500"
-            value={totalAmount}
-            onChange={(e) => setTotalAmount(e.target.value)}
-            required
-          />
-        </div>
+  <label className="block font-medium" htmlFor="totalAmount">
+    Total Amount
+  </label>
+    <input
+      type="text"
+      id="totalAmount"
+      name="totalAmount"
+      className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500"
+      value={totalAmount ? `$${totalAmount}` : ""}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+        setTotalAmount(value);
+      }}
+      required
+    />
+  </div>
         <div>
           <label className="block font-medium" htmlFor="receiptImage">
             Receipt Image

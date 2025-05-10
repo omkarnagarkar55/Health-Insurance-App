@@ -52,7 +52,7 @@ const PlanDetailPage = () => {
       <Detaillist />
       <InsurancePlan planName={plan.planName} premiums={plan.premiums} />
       <GeneralTerms />
-      <Review />
+      {/* <Review /> */}
       <Banner />
       <GetStarted />
       <Accordion />
