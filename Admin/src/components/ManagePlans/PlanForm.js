@@ -1,8 +1,6 @@
-// PlanForm.js
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-const PlanForm = ({ plan, onClose, isEditMode }) => {
+const PlanForm = ({ plan, onClose, isEditMode, onSuccess }) => {
   const [planData, setPlanData] = useState({
     title: "",
     description: "",
@@ -16,40 +14,20 @@ const PlanForm = ({ plan, onClose, isEditMode }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setPlanData({
-      ...planData,
+    setPlanData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (isEditMode) {
-      // Update existing plan
-      axios
-        .put(`http://localhost:5000/plans/${planData.id}`, planData)
-        .then(() => {
-          onClose();
-        })
-        .catch((error) => {
-          console.error("Error updating plan:", error);
-        });
-    } else {
-      // Add new plan
-      axios
-        .post("http://localhost:5000/plans/create", planData)
-        .then(() => {
-          onClose();
-        })
-        .catch((error) => {
-          console.error("Error adding plan:", error);
-        });
-    }
+    onSuccess(planData);  // Trigger dummy add
+    onClose();            // Close modal
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
       <div className="bg-white w-1/2 p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4">
           {isEditMode ? "Edit Plan" : "Add Plan"}
@@ -74,7 +52,7 @@ const PlanForm = ({ plan, onClose, isEditMode }) => {
               onChange={handleInputChange}
               className="w-full py-2 px-3 border rounded-lg"
               rows="4"
-            ></textarea>
+            />
           </div>
           <div className="flex justify-end">
             <button

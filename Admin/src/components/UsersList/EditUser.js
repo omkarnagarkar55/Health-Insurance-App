@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 const EditUser = ({ user, onUpdateUser, onCancelEdit }) => {
   const [editedUser, setEditedUser] = useState({ ...user });
@@ -10,34 +9,27 @@ const EditUser = ({ user, onUpdateUser, onCancelEdit }) => {
   };
 
   const handleSave = () => {
-    // Send a PUT request to your server's update endpoint
-    axios
-      .put(`http://localhost:5000/users/${editedUser._id}`, editedUser)
-      .then((response) => {
-        // After a successful update, you can reflect the changes in the user list
-        onUpdateUser(response.data);
-        onCancelEdit();
-      })
-      .catch((error) => {
-        console.error("Error updating user: ", error);
-      });
+    onUpdateUser(editedUser); 
+    onCancelEdit();          
   };
 
   return (
     <div className="bg-white shadow-lg rounded px-8 pt-10 mt-5 pb-8 mb-4">
       <h2 className="text-xl font-semibold mb-4">Edit User</h2>
+
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Name
         </label>
         <input
           type="text"
-          name="name"
-          value={editedUser.name}
+          name="firstName"
+          value={editedUser.firstName}
           onChange={handleChange}
           className="border rounded-md px-3 py-2 w-full"
         />
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Username
@@ -50,19 +42,22 @@ const EditUser = ({ user, onUpdateUser, onCancelEdit }) => {
           className="border rounded-md px-3 py-2 w-full"
         />
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Email
         </label>
         <input
-          type="text"
+          type="email"
           name="email"
           value={editedUser.email}
           onChange={handleChange}
           className="border rounded-md px-3 py-2 w-full"
         />
       </div>
-      {/* Add other input fields for editing user information */}
+
+      {/* Add other fields if needed */}
+
       <div className="flex items-center justify-between">
         <button
           onClick={handleSave}

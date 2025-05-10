@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserTableRow from "./UserTableRow";
-import EditUser from "./EditUser"; // Import the EditUser component
+import EditUser from "./EditUser";
+import AddUser from "./AddUser";
 
 const UserList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null); // Track the selected user for editing
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   useEffect(() => {
-    // Fetch user data
     axios
       .get("http://localhost:5000/users/getAll")
       .then((response) => {
@@ -22,35 +23,33 @@ const UserList = () => {
       .catch((error) => {
         console.error("Error fetching user data: ", error);
       });
-  }, [searchQuery]);
+  }, []);
 
   const handleDeleteUser = (userId) => {
-    // Send a DELETE request to your server's delete endpoint
-    axios
-      .delete(`http://localhost:5000/users/${userId}`)
-      .then(() => {
-        // After deletion, you can fetch the updated user list if needed
-        const updatedUsers = users.filter((user) => user._id !== userId);
-        setUsers(updatedUsers);  
-      })
-      .catch((error) => {
-        console.error("Error deleting user: ", error);
-      });
+    const updatedUsers = users.filter((user) => user._id !== userId);
+    setUsers(updatedUsers);
   };
 
   const handleEditClick = (user) => {
-    // Set the selected user for editing
     setSelectedUser(user);
   };
 
   const handleCancelEdit = () => {
-    // Clear the selected user when canceling edit
     setSelectedUser(null);
   };
+
+  const handleAddUser = (newUser) => {
+    setUsers((prev) => [...prev, newUser]);
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-4">User List</h1>
+
       <div className="mb-4">
         <input
           type="text"
@@ -60,6 +59,16 @@ const UserList = () => {
           placeholder="Search by username"
         />
       </div>
+
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+        >
+          Add User
+        </button>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto">
           <thead>
@@ -76,29 +85,33 @@ const UserList = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <UserTableRow
                 key={user._id}
                 user={user}
                 onDeleteClick={handleDeleteUser}
-                onUpdateClick={handleEditClick} // Pass the edit function
+                onUpdateClick={handleEditClick}
               />
             ))}
           </tbody>
         </table>
       </div>
-      {selectedUser && ( // Display the EditUser component when a user is selected
+
+      {selectedUser && (
         <EditUser
           user={selectedUser}
           onCancelEdit={handleCancelEdit}
           onUpdateUser={(updatedUser) => {
-            // Update the user in the user list
             const updatedUsers = users.map((user) =>
               user._id === updatedUser._id ? updatedUser : user
             );
             setUsers(updatedUsers);
           }}
         />
+      )}
+
+      {showAddModal && (
+        <AddUser onAddUser={handleAddUser} onClose={() => setShowAddModal(false)} />
       )}
     </div>
   );
