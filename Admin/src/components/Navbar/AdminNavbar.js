@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiBell, FiChevronDown, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 
-const AdminNavbar = ({ toggleSidebar }) => {
+const AdminNavbar = ({ toggleSidebar, setAuthenticated }) => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setAuthenticated(false); // Update parent state
     navigate("/signin");
   };
 

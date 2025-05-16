@@ -39,13 +39,15 @@ const AdminApp = () => {
   return (
     <Router>
       <div className="flex h-screen overflow-hidden">
-        <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+        {/* Only show Sidebar if authenticated */}
+        {authenticated && <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />}
         <div
           className={`flex-1 overflow-x-hidden overflow-y-auto ${
-            sidebarOpen ? "ml-64" : ""
+            authenticated && sidebarOpen ? "ml-64" : ""
           }`}
         >
-          <AdminNavbar toggleSidebar={toggleSidebar} />
+          {/* Only show AdminNavbar if authenticated */}
+          {authenticated && <AdminNavbar toggleSidebar={toggleSidebar} setAuthenticated={setAuthenticated} />}
           <div className="container mx-auto p-4">
             <Routes>
               <Route path="/" element={<Navigate to="/dashboard" />} />
