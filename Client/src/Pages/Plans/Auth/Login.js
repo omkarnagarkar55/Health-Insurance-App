@@ -1,90 +1,70 @@
 import React, { useState } from "react";
 import { useAuth } from "./auth";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       await login(username, password);
-      // Redirect to the dashboard or other protected routes on successful login
+      navigate("/"); // Redirect to home or dashboard
     } catch (error) {
-      setError(error.message);
+      setError("Invalid username or password");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="max-w-md mx-auto">
-            <div>
-              <h1 className="text-2xl font-semibold">
-                Login Form with Caresure Health Insurance
-              </h1>
-            </div>
-            <div className="divide-y divide-gray-200">
-              <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                <div className="relative">
-                  <input
-                    autoComplete="off"
-                    id="username"
-                    name="username"
-                    type="text"
-                    className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <label
-                    htmlFor="username"
-                    className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >
-                    Username
-                  </label>
-                </div>
-                <div className="relative">
-                  <input
-                    autoComplete="off"
-                    id="password"
-                    name="password"
-                    type="password"
-                    className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <label
-                    htmlFor="password"
-                    className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >
-                    Password
-                  </label>
-                </div>
-                <div className="relative">
-                  <button
-                    onClick={handleLogin}
-                    className="bg-blue-500 text-white rounded-md px-4 py-2 mr-2"
-                  >
-                    Submit
-                  </button>
-                  <Link
-                    to="/register" // This should match the path of the RegisterForm route
-                    className="text-blue-500 hover:text-blue-700 font-bold"
-                  >
-                    Register
-                  </Link>
-                </div>
-                {error && <p className="text-red-500">{error}</p>}
-              </div>
-            </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Sign In to Caresure</h2>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block text-gray-700 font-medium mb-1" htmlFor="username">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              autoFocus
+            />
           </div>
-        </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-1" htmlFor="password">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+          >
+            Sign In
+          </button>
+        </form>
+        <p className="mt-4 text-center text-gray-600">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline font-semibold">
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );
