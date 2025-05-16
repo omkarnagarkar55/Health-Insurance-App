@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"; // Example icons
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const transactionsData = [
   { id: 1, user: "John Doe", amount: 150, status: "Approved" },
@@ -50,6 +50,9 @@ const Transactions = () => {
       >
         <FaArrowLeft />
       </button>
+      <span className="px-4 py-2 text-gray-700">
+        Page {currentPage} of {totalPages}
+      </span>
       <button
         onClick={() => handleChangePage(currentPage + 1)}
         className={`px-4 py-2 rounded ${
@@ -59,7 +62,7 @@ const Transactions = () => {
         }`}
         disabled={currentPage === totalPages}
       >
-         <FaArrowRight />
+        <FaArrowRight />
       </button>
     </div>
   );
@@ -69,7 +72,7 @@ const Transactions = () => {
       <h1 className="text-3xl font-semibold mb-4">Transactions</h1>
       <div className="bg-white rounded shadow p-6">
         <div className="flex items-center mb-4">
-          <label htmlFor="search" className="mr-2">
+          <label htmlFor="search" className="mr-2 font-medium">
             Search by User:
           </label>
           <input
@@ -78,38 +81,51 @@ const Transactions = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border rounded px-2 py-1"
+            placeholder="Enter user name"
           />
         </div>
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th className="py-2">ID</th>
-              <th className="py-2">User</th>
-              <th className="py-2">Amount ($)</th>
-              <th className="py-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentTransactions.map((transaction) => (
-              <tr key={transaction.id}>
-                <td className="py-2">{transaction.id}</td>
-                <td className="py-2">{transaction.user}</td>
-                <td className="py-2">${transaction.amount}</td>
-                <td className="py-2">
-                  <span
-                    className={`px-2 py-1 rounded ${
-                      transaction.status === "Approved"
-                        ? "bg-green-500 text-white"
-                        : "bg-yellow-500 text-gray-800"
-                    }`}
-                  >
-                    {transaction.status}
-                  </span>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border border-gray-200 rounded">
+            <thead>
+              <tr className="bg-blue-500 text-white">
+                <th className="py-2 px-4 border-b">ID</th>
+                <th className="py-2 px-4 border-b">User</th>
+                <th className="py-2 px-4 border-b">Amount ($)</th>
+                <th className="py-2 px-4 border-b">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentTransactions.map((transaction, idx) => (
+                <tr
+                  key={transaction.id}
+                  className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                >
+                  <td className="py-2 px-4 border-b text-center">{transaction.id}</td>
+                  <td className="py-2 px-4 border-b">{transaction.user}</td>
+                  <td className="py-2 px-4 border-b text-right">${transaction.amount}</td>
+                  <td className="py-2 px-4 border-b text-center">
+                    <span
+                      className={`px-2 py-1 rounded text-sm font-semibold ${
+                        transaction.status === "Approved"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {transaction.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+              {currentTransactions.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="py-4 text-center text-gray-500">
+                    No transactions found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         {renderPagination()}
       </div>
     </div>

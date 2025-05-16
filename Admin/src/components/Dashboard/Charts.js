@@ -26,8 +26,8 @@ const Charts = () => {
   }, []);
 
   return (
-    <div className="mt-6 p-4 bg-white rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-2">Premium Amount Trends</h2>
+    <div className="mt-6 p-6 bg-white rounded shadow-md">
+      <h2 className="text-xl font-semibold mb-2 text-blue-700">Premium Amount Trends</h2>
       <canvas ref={chartRef}></canvas>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,7 +19,6 @@ import Notifications from "./components/Navbar/Notifications";
 import Messages from "./components/Navbar/Messages";
 import RegisterAdmin from "./components/Auth/RegisterAdmin";
 
-
 const PrivateRoute = ({ authenticated, path, element }) => {
   return authenticated ? element : <Navigate to="/signin" replace />;
 };
@@ -27,6 +26,11 @@ const PrivateRoute = ({ authenticated, path, element }) => {
 const AdminApp = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setAuthenticated(!!token);
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -47,17 +51,16 @@ const AdminApp = () => {
               <Route path="/" element={<Navigate to="/dashboard" />} />
               <Route
                 path="/signin"
-                element={<SignIn setAuthenticated={setAuthenticated} />}
+                element={
+                  authenticated
+                    ? <Navigate to="/dashboard" replace />
+                    : <SignIn setAuthenticated={setAuthenticated} />
+                }
               />
-              import RegisterAdmin from "./components/Auth/RegisterAdmin";
-
-
-
               <Route
-  path="/register-admin"
-  element={<RegisterAdmin />}
-/>
-
+                path="/register-admin"
+                element={<RegisterAdmin />}
+              />
               <Route
                 path="/dashboard"
                 element={
