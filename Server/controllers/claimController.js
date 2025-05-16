@@ -3,7 +3,7 @@ const Claim = require('../models/claimModel');
 exports.createClaim = async (req, res) => {
   try {
     // Generate a random prediction value (for example: "Approved" or "Rejected")
-    const predictions = ["Approved", "Rejected", "Pending Review"];
+    const predictions = ["High Approval", "High Rejection", "Pending Review"];
     const randomPrediction = predictions[Math.floor(Math.random() * predictions.length)];
 
     // Add prediction to claim data
