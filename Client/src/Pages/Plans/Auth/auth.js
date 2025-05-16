@@ -1,10 +1,19 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  // Restore user from localStorage on app load
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Optionally, you can decode the token or fetch user info here
+      setUser({ token }); // Or setUser({ username, token }) if you store username
+    }
+  }, []);
 
   const login = async (username, password) => {
     try {
@@ -15,7 +24,6 @@ export const AuthProvider = ({ children }) => {
           password,
         }
       );
-      
 
       if (response.data.token) {
         // Set the user and token in state
@@ -45,7 +53,8 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
-  );};
+  );
+};
 
 export const useAuth = () => {
   return useContext(AuthContext);

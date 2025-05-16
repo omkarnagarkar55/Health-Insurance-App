@@ -11,87 +11,109 @@ const Header = () => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Change image every 5 seconds
-
-    return () => {
-      clearInterval(interval);
-    };
+    }, 3000);
+    return () => clearInterval(interval);
   }, [images.length]);
+
   return (
-    <div>
-      <section className="text-gray-600 body-font bg-gradient-to-r from-blue-50 to-cyan-50">
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center ">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center p-5">
-            <div className="text-blue-700/95 mb-5">
-              THE HEALTH INSURANCE SPECIALIST
-            </div>
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-              We have the answer to your happy
-              <br className="hidden lg:inline-block" />
-              and secure future
-            </h1>
-            <p className="mb-8 leading-relaxed">
-              Health plans for every stage of your life.
-            </p>
-            <div className="flex justify-center relative w-180 p-7 px-20 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-              <form>
-                <div className="grid gap-6 mb-6 md:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="first_name"
-                      className="block mb-2 text-sm font-medium text-gray-900 light:text-white"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 light:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="John"
-                      required=""
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="block mb-2 text-sm font-medium text-gray-900 light:text-white"
-                    >
-                      Phone number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 light:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="+1(123)456-7890"
-                      pattern="^\+1\(\d{3}\)\d{3}-\d{4}$"
-                      required
-                    />
-                  </div>
+    <section className="text-gray-600 body-font bg-gradient-to-r from-blue-50 to-cyan-50">
+      <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+        {/* Left Content */}
+        <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center p-5">
+          <span className="text-blue-700/95 mb-4 font-semibold tracking-wide uppercase text-sm">
+            THE HEALTH INSURANCE SPECIALIST
+          </span>
+          <h1 className="title-font sm:text-4xl text-3xl mb-6 font-extrabold text-blue-900 leading-tight drop-shadow">
+            We have the answer to your happy
+            <br className="hidden lg:inline-block" />
+            and secure future
+          </h1>
+          <p className="mb-8 leading-relaxed text-lg text-gray-700">
+            Health plans for every stage of your life.
+          </p>
+          <div className="w-full bg-white bg-clip-border rounded-xl shadow-lg p-7 mb-6">
+            <form>
+              <div className="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="first_name"
+                    className="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="John"
+                    required
+                  />
                 </div>
-                <button
-                  type="submit"
-                  className="text-white bg-[#f97316] hover:bg-[#fb923c] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-[#f97316] dark:hover:bg-[#f97316] dark:focus:ring-[#fb923c]"
-                >
-                  Get a quote &gt;
-                </button>
-              </form>
-            </div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Phone number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="+1(123)456-7890"
+                    pattern="^\+1\(\d{3}\)\d{3}-\d{4}$"
+                    required
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full sm:w-auto text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-base px-6 py-2.5 text-center transition"
+              >
+                Get a quote &gt;
+              </button>
+            </form>
           </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-10/6">
+          <div className="flex flex-wrap gap-3 mt-2">
+            <span className="inline-flex items-center px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+              24/7 Support
+            </span>
+            <span className="inline-flex items-center px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">
+              Cashless Hospitals
+            </span>
+            <span className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+              Fast Claim Settlement
+            </span>
+          </div>
+        </div>
+        {/* Right Image Carousel */}
+        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-full flex flex-col items-center relative">
+          <div className="w-full h-80 rounded-2xl shadow-2xl overflow-hidden relative">
             {images.map((image, index) => (
               <img
                 key={index}
-                className={`object-cover object-center rounded ${
-                  index === currentImageIndex ? "block" : "hidden"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
                 }`}
                 alt="hero"
                 src={image}
               />
             ))}
+            {/* Carousel indicators */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+              {images.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`block w-3 h-3 rounded-full ${
+                    idx === currentImageIndex ? "bg-blue-600" : "bg-blue-200"
+                  }`}
+                ></span>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
