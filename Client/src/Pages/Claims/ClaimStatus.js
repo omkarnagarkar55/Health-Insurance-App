@@ -1,34 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const ClaimStatus = () => {
-  // Simulated claim status data - Replace this with actual data from API or state
-  const claimStatusData = [
-    {
-      claimNumber: "CLM123456",
-      status: "Pending",
-      amount: "$300.00",
-      date: "07/29/2023",
-      policyHolder: "Pavan Korat",
-      phoneNumber: "(851) 141-1930",
-      email: "pavankorat@example.com",
-      chances: "Low",
-    },
-    {
-      claimNumber: "CLM789012",
-      status: "Approved",
-      amount: "$180.00",
-      date: "07/20/2023",
-      policyHolder: "Aayush Patel",
-      phoneNumber: "(932) 837-3131",
-      email: "aayushpatel@example.com",
-      chances: "High",
-    },
-  ];
+  const [claims, setClaims] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchClaims = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/claims");
+        const data = await response.json();
+        setClaims(data);
+      } catch (error) {
+        setClaims([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchClaims();
+  }, []);
 
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4 text-center">Claim Status</h2>
-      {claimStatusData.length === 0 ? (
+      {loading ? (
+        <p>Loading...</p>
+      ) : claims.length === 0 ? (
         <p>No claim status available.</p>
       ) : (
         <div className="overflow-x-auto">
@@ -40,18 +36,24 @@ const ClaimStatus = () => {
                 <th className="p-2 border">Amount</th>
                 <th className="p-2 border">Date</th>
                 <th className="p-2 border">Policy Holder</th>
-                <th className="p-2 border">Chances of Approval</th>
+                <th className="p-2 border">Policy Number</th>
+                <th className="p-2 border">Claim Type</th>
+                <th className="p-2 border">Prediction</th> {/* Added Prediction column */}
               </tr>
             </thead>
             <tbody>
-              {claimStatusData.map((claim) => (
-                <tr key={claim.claimNumber} className="hover:bg-gray-50">
-                  <td className="p-2 border">{claim.claimNumber}</td>
+              {claims.map((claim) => (
+                <tr key={claim._id} className="hover:bg-gray-50">
+                  <td className="p-2 border">{claim._id}</td>
                   <td className="p-2 border">{claim.status}</td>
-                  <td className="p-2 border">{claim.amount}</td>
-                  <td className="p-2 border">{claim.date}</td>
-                  <td className="p-2 border">{claim.policyHolder}</td>
-                  <td className="p-2 border">{claim.chances}</td>
+                  <td className="p-2 border">${claim.totalAmount}</td>
+                  <td className="p-2 border">
+                    {new Date(claim.dateOfService).toLocaleDateString()}
+                  </td>
+                  <td className="p-2 border">{claim.policyHolderName}</td>
+                  <td className="p-2 border">{claim.policyNumber}</td>
+                  <td className="p-2 border">{claim.claimType}</td>
+                  <td className="p-2 border">{claim.prediction || "N/A"}</td> {/* Display prediction */}
                 </tr>
               ))}
             </tbody>

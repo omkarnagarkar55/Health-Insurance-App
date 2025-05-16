@@ -9,6 +9,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 const Admin = require("./models/adminModel"); // Import the Admin model
 require("dotenv").config(); // Load environment variables from .env
+const claimRoutes = require('./routes/claimRoutes');
 
 const app = express();
 const port = process.env.PORT || 5000; // Use PORT from .env or default to 5000
@@ -59,6 +60,7 @@ app.use("/plans", planRoutes);
 app.use("/plandata", planDataRoutes);
 app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
+app.use('/api', claimRoutes);
 
 // Start the server
 app.listen(port, () => {

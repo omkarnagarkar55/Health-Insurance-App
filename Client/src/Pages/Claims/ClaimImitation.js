@@ -10,7 +10,7 @@ const ClaimImitation = () => {
   const [receiptImage, setReceiptImage] = useState(null);
   const [submittedClaims, setSubmittedClaims] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newClaim = {
       claimType,
@@ -19,22 +19,33 @@ const ClaimImitation = () => {
       dateOfService,
       diagnosis,
       totalAmount,
-      receiptImage,
+      // receiptImage is not included here since it's a file
     };
-    // Update the submittedClaims array with the new claim data
     setSubmittedClaims([...submittedClaims, newClaim]);
-
-    // Display the array of submitted claims in the console
-    console.log("Submitted Claims:", submittedClaims);
-
-    // Reset the form after submission
-    setClaimType("");
-    setPolicyHolderName("");
-    setPolicyNumber("");
-    setDateOfService("");
-    setDiagnosis("");
-    setTotalAmount("");
-    setReceiptImage(null);
+    try {
+      const response = await fetch('http://localhost:5000/api/claims', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newClaim),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('Claim submitted successfully!');
+        setClaimType("");
+        setPolicyHolderName("");
+        setPolicyNumber("");
+        setDateOfService("");
+        setDiagnosis("");
+        setTotalAmount("");
+        setReceiptImage(null);
+      } else {
+        alert(data.error || 'Failed to submit claim');
+      }
+    } catch (error) {
+      alert('Error submitting claim');
+    }
   };
 
   return (
@@ -59,7 +70,6 @@ const ClaimImitation = () => {
             <option value="medical">Medical</option>
             <option value="dental">Dental</option>
             <option value="vision">Vision</option>
-            {/* Add more claim types if needed */}
           </select>
         </div>
         <div>
@@ -119,22 +129,22 @@ const ClaimImitation = () => {
           ></textarea>
         </div>
         <div>
-  <label className="block font-medium" htmlFor="totalAmount">
-    Total Amount
-  </label>
-    <input
-      type="text"
-      id="totalAmount"
-      name="totalAmount"
-      className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500"
-      value={totalAmount ? `$${totalAmount}` : ""}
-      onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-        setTotalAmount(value);
-      }}
-      required
-    />
-  </div>
+          <label className="block font-medium" htmlFor="totalAmount">
+            Total Amount
+          </label>
+          <input
+            type="text"
+            id="totalAmount"
+            name="totalAmount"
+            className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:ring focus:border-blue-500"
+            value={totalAmount ? `$${totalAmount}` : ""}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9]/g, "");
+              setTotalAmount(value);
+            }}
+            required
+          />
+        </div>
         <div>
           <label className="block font-medium" htmlFor="receiptImage">
             Receipt Image

@@ -9,6 +9,7 @@ const claimSchema = new mongoose.Schema({
   totalAmount: { type: Number, required: true },
   receiptImage: { type: String }, // URL or file path for the uploaded receipt
   status: { type: String, default: "Pending" }, // Default status is "Pending"
+  prediction: { type: String }, // <-- Add this line
 });
 
 module.exports = mongoose.model("Claim", claimSchema);
