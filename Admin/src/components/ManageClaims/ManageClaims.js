@@ -19,18 +19,47 @@ const ManageClaims = () => {
     fetchClaims();
   }, []);
 
-  const approveClaim = (claimId) => {
-    const updatedClaims = claims.map((claim) =>
-      claim._id === claimId ? { ...claim, status: "Approved" } : claim
-    );
-    setClaims(updatedClaims);
+  const approveClaim = async (claimId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/claims/${claimId}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "Approved" }),
+      });
+      if (response.ok) {
+        // Update local state after successful DB update
+        setClaims((prevClaims) =>
+          prevClaims.map((claim) =>
+            claim._id === claimId ? { ...claim, status: "Approved" } : claim
+          )
+        );
+      } else {
+        alert("Failed to update claim status.");
+      }
+    } catch (error) {
+      alert("Error updating claim status.");
+    }
   };
 
-  const rejectClaim = (claimId) => {
-    const updatedClaims = claims.map((claim) =>
-      claim._id === claimId ? { ...claim, status: "Rejected" } : claim
-    );
-    setClaims(updatedClaims);
+  const rejectClaim = async (claimId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/claims/${claimId}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "Rejected" }),
+      });
+      if (response.ok) {
+        setClaims((prevClaims) =>
+          prevClaims.map((claim) =>
+            claim._id === claimId ? { ...claim, status: "Rejected" } : claim
+          )
+        );
+      } else {
+        alert("Failed to update claim status.");
+      }
+    } catch (error) {
+      alert("Error updating claim status.");
+    }
   };
 
   const viewClaimDetails = (claim) => {

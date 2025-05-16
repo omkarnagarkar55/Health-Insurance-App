@@ -25,3 +25,21 @@ exports.getAllClaims = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.updateClaimStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const updatedClaim = await Claim.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    if (!updatedClaim) {
+      return res.status(404).json({ error: "Claim not found" });
+    }
+    res.json(updatedClaim);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

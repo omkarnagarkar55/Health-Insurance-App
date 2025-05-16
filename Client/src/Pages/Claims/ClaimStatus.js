@@ -20,46 +20,71 @@ const ClaimStatus = () => {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4 text-center">Claim Status</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : claims.length === 0 ? (
-        <p>No claim status available.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="p-2 border">Claim Number</th>
-                <th className="p-2 border">Status</th>
-                <th className="p-2 border">Amount</th>
-                <th className="p-2 border">Date</th>
-                <th className="p-2 border">Policy Holder</th>
-                <th className="p-2 border">Policy Number</th>
-                <th className="p-2 border">Claim Type</th>
-                <th className="p-2 border">Prediction</th> {/* Added Prediction column */}
-              </tr>
-            </thead>
-            <tbody>
-              {claims.map((claim) => (
-                <tr key={claim._id} className="hover:bg-gray-50">
-                  <td className="p-2 border">{claim._id}</td>
-                  <td className="p-2 border">{claim.status}</td>
-                  <td className="p-2 border">${claim.totalAmount}</td>
-                  <td className="p-2 border">
-                    {new Date(claim.dateOfService).toLocaleDateString()}
-                  </td>
-                  <td className="p-2 border">{claim.policyHolderName}</td>
-                  <td className="p-2 border">{claim.policyNumber}</td>
-                  <td className="p-2 border">{claim.claimType}</td>
-                  <td className="p-2 border">{claim.prediction || "N/A"}</td> {/* Display prediction */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-200 py-8">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-7xl"> {/* Increased max-w-5xl to max-w-7xl */}
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-700">
+          Claim Status
+        </h2>
+        {loading ? (
+          <div className="text-center text-blue-600 font-semibold py-8">Loading...</div>
+        ) : claims.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">No claim status available.</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto border border-gray-200 rounded-lg shadow text-base"> {/* Added text-base for larger text */}
+              <thead>
+                <tr className="bg-blue-500 text-white text-lg"> {/* Increased header text size */}
+                  <th className="py-3 px-6 border-b">Claim Number</th>
+                  <th className="py-3 px-6 border-b">Status</th>
+                  <th className="py-3 px-6 border-b">Amount</th>
+                  <th className="py-3 px-6 border-b">Date</th>
+                  <th className="py-3 px-6 border-b">Policy Holder</th>
+                  <th className="py-3 px-6 border-b">Policy Number</th>
+                  <th className="py-3 px-6 border-b">Claim Type</th>
+                  <th className="py-3 px-6 border-b">Prediction</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {claims.map((claim, idx) => (
+                  <tr
+                    key={claim._id}
+                    className={idx % 2 === 0 ? "bg-white" : "bg-blue-50"}
+                  >
+                    <td className="py-3 px-6 border-b text-center">{claim._id}</td>
+                    <td className="py-3 px-6 border-b text-center">
+                      <span
+                        className={`px-2 py-1 rounded text-sm font-semibold ${
+                          claim.status === "Approved"
+                            ? "bg-green-100 text-green-700"
+                            : claim.status === "Rejected"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
+                        {claim.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-6 border-b text-right">${claim.totalAmount}</td>
+                    <td className="py-3 px-6 border-b text-center">
+                      {claim.dateOfService
+                        ? new Date(claim.dateOfService).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td className="py-3 px-6 border-b">{claim.policyHolderName}</td>
+                    <td className="py-3 px-6 border-b">{claim.policyNumber}</td>
+                    <td className="py-3 px-6 border-b">{claim.claimType}</td>
+                    <td className="py-3 px-6 border-b text-center">
+                      <span className="px-2 py-1 rounded bg-blue-100 text-blue-700 text-sm font-semibold">
+                        {claim.prediction || "N/A"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
