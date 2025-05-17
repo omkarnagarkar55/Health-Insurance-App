@@ -34,10 +34,10 @@ and operational efficiency for insurance providers.
 ## 3. Team Members
 
 This project was collaboratively developed by:
-- **Omkar Nagarkar (MS Software Engineering, San Jose State University)** - Machine Learning Model Development, Backend API.
-- **Atharva Jadhav (MS Software Engineering, San Jose State University)** - Frontend Development (Client Application).
-- **Purvil Patel (MS Software Engineering, San Jose State University)** - Admin Dashboard, Fraud Detection Module.
-- **Sangram Jagtap (MS Software Engineering, San Jose State University)** - API Integration, Database Management.
+- **Omkar Nagarkar (MS Software Engineering, San Jose State University)**
+- **Atharva Jadhav (MS Software Engineering, San Jose State University)** 
+- **Purvil Patel (MS Software Engineering, San Jose State University)**
+- **Sangram Jagtap (MS Software Engineering, San Jose State University)**
 
 ---
 
