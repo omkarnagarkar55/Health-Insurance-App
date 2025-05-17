@@ -1,95 +1,194 @@
 
-# Health Insurance Claim Management
+# Health Insurance Predictive Analytics Project
+
+## 1. Introduction
+
+This project is a comprehensive predictive analytics system designed to streamline health insurance claims management. 
+It leverages machine learning to predict claim approvals and detect potential fraudulent claims, improving transparency 
+and operational efficiency for insurance providers.
+
+### Key Objectives:
+- Enhance claims management through predictive analytics.
+- Improve fraud detection using machine learning.
+- Provide a user-friendly interface for both clients and administrators.
 
 ---
 
-## 1. Introduction of the Project
+## 2. System Architecture
 
-The **Health Insurance Claim Management** is a comprehensive web application designed to streamline health insurance claim management. It consists of four modular components that together provide a complete solution for claim submission, management, and predictive analytics:
+### Components:
+- **Client Application:** React.js frontend for user interaction (policyholders).
+- **Admin Dashboard:** React.js interface for administrators to review and manage claims.
+- **Backend Server:** Node.js with Express.js handling API requests.
+- **Machine Learning Microservice:** Python (Flask) serving ML models for claim prediction and fraud detection.
 
-- **Admin Panel:** A dashboard for administrators to manage users, monitor claim processing, and oversee system performance.
-- **Client Application:** The primary user interface for customers, where they can submit claims, view claim status, and access account information.
-- **Server API:** A robust backend that provides secure RESTful APIs for the Client and Admin components, managing authentication, claim processing, and data storage.
-- **Prediction Model Microservice:** A machine learning-powered service that predicts claim outcomes (approved or denied) using historical claim data, improving decision-making and efficiency.
-
----
-
-## 2. Key Features
-
-- **User Management:** Secure login and registration for clients and admins.
-- **Claim Submission:** Clients can submit insurance claims through an intuitive interface.
-- **Claim Status Tracking:** Clients can track the status of their claims in real-time.
-- **Admin Dashboard:** Administrators can view, approve, or deny claims, and manage user roles.
-- **Predictive Analytics:** Machine learning-based model that predicts claim outcomes, helping reduce denial rates.
-- **Scalable Architecture:** Modular components (Client, Admin, Server, Prediction Model) can be independently deployed.
-- **RESTful API:** Secure and scalable backend API for client-server communication.
+### Key Technologies:
+- **Frontend:** React.js, Tailwind CSS for responsive design.
+- **Backend:** Node.js, Express.js for RESTful API services.
+- **Database:** MongoDB for data storage.
+- **Machine Learning:** Python, Flask, Scikit-Learn, XGBoost, Logistic Regression.
+- **Deployment:** Docker, Railway, Vercel.
 
 ---
 
-## 4. Prerequisites
+## 3. Key Features
 
-### System Requirements
-- **Operating System:** Windows, macOS, or Linux
-- **Node.js:** v14.x or above
-- **Python:** v3.8 or above
-- **npm:** v6.x or above
-- **Git:** Latest version
-- **Virtual Environment (Python):** `venv` module
+### Client Side (User Portal):
+- Secure registration and login using JWT authentication.
+- Submit health insurance claims with detailed information.
+- Real-time claim approval predictions using ML.
+- Track claim status directly from the dashboard.
+
+### Admin Side (Admin Dashboard):
+- View and manage all claims.
+- Fraud detection with flags for "Likely Fraudulent" claims.
+- Override claim statuses with manual review.
+- Role-based access control for secure administration.
+
+### Predictive Analytics:
+- Claim Approval Prediction:
+  - Model: Random Forest (85% accuracy, 0.91 ROC-AUC).
+  - Key Features: Policy tenure, claim amount, diagnosis code.
+- Fraud Detection:
+  - Model: Logistic Regression (Precision: 88%, Recall: 84%, F1-Score: 0.86).
+  - Data Handling: SMOTE for imbalance correction.
 
 ---
 
-## 5. Installation Instructions
+## 4. Installation Instructions
 
-### Clone the Repository
+### Clone the Repository:
 ```bash
 git clone https://github.com/omkarnagarkar55/Health-Insurance-App.git
 cd Health-Insurance-App
 ```
 
-### Setting Up Components (Server, Client, Admin, Prediction Model)
-Refer to the README for detailed setup of each component.
+### Setting Up the Server (Backend API):
+```bash
+cd ./server
+npm install
+npm start
+```
+
+### Setting Up the Client (User Portal):
+```bash
+cd ./client
+npm install
+npm start
+```
+
+### Setting Up the Admin Dashboard:
+```bash
+cd ./admin
+npm install
+npm start
+```
+
+### Setting Up the Machine Learning Microservice:
+```bash
+cd "./Prediction Model"
+python3 -m venv env
+source env/bin/activate  # Windows: env\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
 
 ---
 
-## 6. Usage Instructions
-- Visit Client at `http://localhost:3000`
-- Visit Admin at `http://localhost:4000`
-- Access API at `http://localhost:5000`
-- Prediction Model at `http://localhost:5001`
+## 5. Usage Instructions
+
+### Client Application (User Portal):
+- Visit `http://localhost:3000`.
+- Register/Login as a client.
+- Submit claims and receive real-time prediction feedback.
+
+### Admin Dashboard:
+- Visit `http://localhost:4000`.
+- Review claims, manage users, and monitor fraud detection results.
+
+### API Endpoints (Server):
+- Claim Submission: `POST /api/claims`
+- Claim Prediction: `POST /api/predict`
+
+### Prediction Microservice:
+- Endpoint: `http://localhost:5001/predict`
+
+Example API Request:
+```bash
+curl -X POST http://localhost:5001/predict -d '{"age": 45, "bmi": 26.5, "smoker": "yes"}'
+```
 
 ---
 
-## 7. Project Structure
+## 6. Project Structure
 
 ```
 Health-Insurance-App/
 ├── admin/                 # Admin Dashboard (React)
 ├── client/                # Client Application (React)
-├── server/                # Server API (Node.js, Express)
-├── Prediction Model/      # Machine Learning Model (Python, Flask)
+├── server/                # Backend API (Node.js, Express)
+├── Prediction Model/      # Machine Learning Microservice (Python, Flask)
 └── README.md              # Project Documentation
 ```
 
 ---
 
-## 8. Contributing
+## 7. Methodology
+
+### Data Collection:
+- Health insurance claim data from publicly available datasets (~10,000 records).
+- Features: age, gender, policy tenure, claim amount, diagnosis code.
+
+### Machine Learning Models:
+- Claim Approval Prediction: Random Forest (85% accuracy, ROC-AUC 0.91).
+- Fraud Detection: Logistic Regression with class weighting (F1-Score 0.86).
+
+### Model Training:
+- Data Preprocessing: Label encoding, normalization, and feature engineering.
+- Model Evaluation: Precision, Recall, F1-Score, ROC-AUC.
+
+### Deployment:
+- Frontend: Vercel (Client and Admin).
+- Backend and ML API: Railway (Docker Containers).
+
+---
+
+## 8. Security and Compliance
+
+- **Data Encryption:** TLS for data in transit, AES-256 for data at rest.
+- **Authentication:** JWT (JSON Web Token) for secure user sessions.
+- **Role-Based Access Control (RBAC):** Separate permissions for clients and admins.
+- **HIPAA Compliance:** Security measures for handling health data.
+
+---
+
+## 9. Potential Future Improvements
+
+- Extend model capabilities with deep learning for enhanced accuracy.
+- Integrate advanced fraud detection using anomaly detection.
+- Expand user interface with enhanced analytics and reporting.
+- Implement CI/CD pipelines for automated deployment.
+
+---
+
+## 10. Contributing
 
 Contributions are welcome! Please follow these steps:
 1. Fork the repository.
-2. Create a new branch.
-3. Make your changes and commit.
-4. Push to the branch.
+2. Create a new branch: `git checkout -b feature-branch`
+3. Make your changes and commit: `git commit -m "Add new feature"`
+4. Push to the branch: `git push origin feature-branch`
 5. Create a pull request.
 
 ---
 
-## 9. License
+## 11. License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 10. Contact
+## 12. Contact
 
 For any questions, suggestions, or feedback, please open an issue in this repository or contact the author through GitHub.
 
