@@ -31,7 +31,17 @@ and operational efficiency for insurance providers.
 
 ---
 
-## 3. Key Features
+## 3. Team Members
+
+This project was collaboratively developed by:
+- **Omkar Nagarkar (MS Software Engineering, San Jose State University)** - Machine Learning Model Development, Backend API.
+- **Atharva Jadhav (MS Software Engineering, San Jose State University)** - Frontend Development (Client Application).
+- **Purvil Patel (MS Software Engineering, San Jose State University)** - Admin Dashboard, Fraud Detection Module.
+- **Sangram Jagtap (MS Software Engineering, San Jose State University)** - API Integration, Database Management.
+
+---
+
+## 4. Key Features
 
 ### Client Side (User Portal):
 - Secure registration and login using JWT authentication.
@@ -55,7 +65,7 @@ and operational efficiency for insurance providers.
 
 ---
 
-## 4. Installation Instructions
+## 5. Installation Instructions
 
 ### Clone the Repository:
 ```bash
@@ -95,7 +105,7 @@ python app.py
 
 ---
 
-## 5. Usage Instructions
+## 6. Usage Instructions
 
 ### Client Application (User Portal):
 - Visit `http://localhost:3000`.
@@ -120,7 +130,7 @@ curl -X POST http://localhost:5001/predict -d '{"age": 45, "bmi": 26.5, "smoker"
 
 ---
 
-## 6. Project Structure
+## 7. Project Structure
 
 ```
 Health-Insurance-App/
@@ -133,7 +143,7 @@ Health-Insurance-App/
 
 ---
 
-## 7. Methodology
+## 8. Methodology
 
 ### Data Collection:
 - Health insurance claim data from publicly available datasets (~10,000 records).
@@ -143,31 +153,18 @@ Health-Insurance-App/
 - Claim Approval Prediction: Random Forest (85% accuracy, ROC-AUC 0.91).
 - Fraud Detection: Logistic Regression with class weighting (F1-Score 0.86).
 
-### Model Training:
-- Data Preprocessing: Label encoding, normalization, and feature engineering.
-- Model Evaluation: Precision, Recall, F1-Score, ROC-AUC.
-
 ### Deployment:
 - Frontend: Vercel (Client and Admin).
 - Backend and ML API: Railway (Docker Containers).
 
 ---
 
-## 8. Security and Compliance
+## 9. Security and Compliance
 
 - **Data Encryption:** TLS for data in transit, AES-256 for data at rest.
 - **Authentication:** JWT (JSON Web Token) for secure user sessions.
 - **Role-Based Access Control (RBAC):** Separate permissions for clients and admins.
 - **HIPAA Compliance:** Security measures for handling health data.
-
----
-
-## 9. Potential Future Improvements
-
-- Extend model capabilities with deep learning for enhanced accuracy.
-- Integrate advanced fraud detection using anomaly detection.
-- Expand user interface with enhanced analytics and reporting.
-- Implement CI/CD pipelines for automated deployment.
 
 ---
 
